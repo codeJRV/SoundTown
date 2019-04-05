@@ -91,7 +91,7 @@ h3 {font-size:25px}
 
 
 .box { position: relative; padding: 1em; margin: 0 0 1em 0; } 
-.cream { background: #F3E8C6; color: #000; } 
+.cream { background: #070707; color: #000; } 
 .corner { position: absolute; width: 20px; height: 20px; background: url(images/square.png) no-repeat; } 
 .TL { top: 0; left: 0; background-position: 0 0; } 
 .TR { top: 0; right: 0; background-position: 100% 0; } 
