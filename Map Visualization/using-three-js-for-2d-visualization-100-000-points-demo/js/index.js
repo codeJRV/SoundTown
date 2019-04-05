@@ -30,14 +30,14 @@ window.addEventListener('resize', () => {
 
 let color_array = [
   "#ffffff",
-	"#1f78b4",
+  "#1f78b4",
   "#ff7f00"
-	
-	/*
+  
+  /*
   "#33a02c",
   "#fb9a99",
   "#e31a1c",
-	
+  
   "#fdbf6f",
   "#ff7f00",
   "#6",
@@ -193,13 +193,13 @@ function checkIntersects(mouse_position) {
     let intersect = sorted_intersects[0];
     let index = intersect.index;
     let datum = generated_points[index];
-	  if(datum.group!=0)
-		  {
-			  
-			      highlightPoint(datum);
+    if(datum.group!=0)
+      {
+        
+            highlightPoint(datum);
     showTooltip(mouse_position, datum); 
-			  
-		  }
+        
+      }
 
   } else {
     removeHighlights();
@@ -227,11 +227,11 @@ function checkIntersects_songplay(mouse_position) {
     let intersect = sorted_intersects[0];
     let index = intersect.index;
     let datum = generated_points[index];
-	  if(datum.group!=0)
-		  {
-			  //alert("group",datum.group);
-			  alert("play a song here");  
-		  }
+    if(datum.group!=0)
+      {
+        //alert("group",datum.group);
+        alert("play a song here");  
+      }
   } 
 }
 
@@ -317,11 +317,24 @@ function hideTooltip() {
 
 // Change color scheme based on selected friend
 function ChangePointCloud(elt){
-	
-	if(elt.id == "Friend 1")
-		{
+  
+  if(elt.id == "Friend 1")
+    {
+      pgroup1 = 9000;
+    }
+  
+  else if(elt.id == "Friend 2")
+    {
+      pgroup1 = 2000;
+    }
+  
+  else if(elt.id == "Friend 3")
+    {
+      pgroup1 = 7000;
+    }
+  
 let data_points = [];
-for (let i = 0; i < 9000; i++) {
+for (let i = 0; i < pgroup1; i++) {
   let position = randomPosition(radius);
   let name = 'Point ' + i;
   let group = Math.floor(Math.random() * 1);
@@ -330,7 +343,7 @@ for (let i = 0; i < 9000; i++) {
   data_points.push(point);
 }
 
-for (let i = 9000; i < point_num; i++) {
+for (let i = pgroup1; i < point_num; i++) {
   let position = randomPosition(radius);
   let name = 'Point ' + i;
   let group = Math.floor(Math.random() * 3);
@@ -372,117 +385,4 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
-		}
-	
-	else if(elt.id == "Friend 2")
-		{
-			let data_points = [];
-for (let i = 0; i < 2000; i++) {
-  let position = randomPosition(radius);
-  let name = 'Point ' + i;
-  let group = Math.floor(Math.random() * 1);
-  let point = { position, name, group };
-  data_points.push(point);
-}
-
-for (let i = 2000; i < point_num; i++) {
-  let position = randomPosition(radius);
-  let name = 'Point ' + i;
-  let group = Math.floor(Math.random() * 3);
-  let point = { position, name, group };
-  data_points.push(point);
-}
-
-let generated_points = data_points;
-
-let pointsGeometry = new THREE.Geometry();
-
-let colors = [];
-for (let datum of generated_points) {
-  // Set vector coordinates from data
-  let vertex = new THREE.Vector3(datum.position[0], datum.position[1], 0);
-  pointsGeometry.vertices.push(vertex);
-  let color = new THREE.Color(color_array[datum.group]);
-  colors.push(color);
-}
-pointsGeometry.colors = colors;
-
-let pointsMaterial = new THREE.PointsMaterial({
-  size: 8,
-  sizeAttenuation: false,
-  vertexColors: THREE.VertexColors,
-  map: circle_sprite,
-  transparent: true
-});
-
-let points = new THREE.Points(pointsGeometry, pointsMaterial);
-
-let scene = new THREE.Scene();
-scene.add(points);
-scene.background = new THREE.Color(0xefefef);
-
-// Three.js render loop
-function animate() {
-  requestAnimationFrame(animate);
-  renderer.render(scene, camera);
-}
-animate();
-			
-		}
-	
-	else if(elt.id == "Friend 3")
-		{
-			let data_points = [];
-for (let i = 0; i < 8000; i++) {
-  let position = randomPosition(radius);
-  let name = 'Point ' + i;
-  let group = Math.floor(Math.random() * 1);
-  let point = { position, name, group };
-  data_points.push(point);
-}
-
-for (let i = 8000; i < point_num; i++) {
-  let position = randomPosition(radius);
-  let name = 'Point ' + i;
-  let group = Math.floor(Math.random() * 3);
-  let point = { position, name, group };
-  data_points.push(point);
-}
-
-let generated_points = data_points;
-
-let pointsGeometry = new THREE.Geometry();
-
-let colors = [];
-for (let datum of generated_points) {
-  // Set vector coordinates from data
-  let vertex = new THREE.Vector3(datum.position[0], datum.position[1], 0);
-  pointsGeometry.vertices.push(vertex);
-  let color = new THREE.Color(color_array[datum.group]);
-  colors.push(color);
-}
-pointsGeometry.colors = colors;
-
-let pointsMaterial = new THREE.PointsMaterial({
-  size: 8,
-  sizeAttenuation: false,
-  vertexColors: THREE.VertexColors,
-  map: circle_sprite,
-  transparent: true
-});
-
-let points = new THREE.Points(pointsGeometry, pointsMaterial);
-
-let scene = new THREE.Scene();
-scene.add(points);
-scene.background = new THREE.Color(0xefefef);
-
-// Three.js render loop
-function animate() {
-  requestAnimationFrame(animate);
-  renderer.render(scene, camera);
-}
-animate();
-			
-		}
 }
