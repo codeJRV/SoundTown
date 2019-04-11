@@ -18,7 +18,7 @@ object {vertical-align:top;outline:none}
 .wrapper {width:100%;overflow:hidden}
 p {margin:0;padding:0}
 .tail-top {background:url(images/tail-top.gif) center top repeat-x}
-.tail-top-left {height:161px;position:absolute;left:0;top:0;width:50%;background:url(images/tail-top-left.gif) repeat-x left top}
+.tail-top-left {height:150px;position:absolute;left:0;top:0;width:100%;background:url(images/tail-top-left.gif) repeat-x left top}
 .tail-bottom {background:url(images/tail-bottom.png) left bottom repeat-x}
 /* forms */
 #contacts-form {clear:right;width:100%;overflow:hidden;padding:15px 0 0 0}
@@ -57,7 +57,7 @@ h2 {font-size:36px}
 h3 {font-size:25px}
 .link {text-align:right;font-weight:bold}
 /*header*/
-#header {background:url(images/header-bg.jpg) no-repeat left top;height:161px}
+#header {background:url(images/header-bg.jpg) repeat-x left top;height:150px}
 #header .logo {        margin: 0 auto;
     text-align: center;
     width: 100%;
@@ -75,7 +75,7 @@ h3 {font-size:25px}
 #footer img {position:relative;top:-4px}
 .profile {
   width: 65%;
-  height: 90%;
+  height: 100%;
   float: left;
   padding: 5px;
 
@@ -84,8 +84,8 @@ h3 {font-size:25px}
 .map {
 	  width: 30%;
 	  height: 90%;
-  float: left;
-  padding: 5px;
+      float: right;
+      padding: 5px;
 
 }
 
