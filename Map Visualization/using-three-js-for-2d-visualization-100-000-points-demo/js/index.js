@@ -2,9 +2,11 @@
 
 let point_num = 960;
 
-let width = window.innerWidth;
+//let width = window.innerWidth;
+let width = 100;
 let viz_width = width;
-let height = window.innerHeight;
+//let height = window.innerHeight;
+let height = 100;
 
 let fov = 40;
 let near = 10;
@@ -19,9 +21,9 @@ let camera = new THREE.PerspectiveCamera(
 );
 
 window.addEventListener('resize', () => {
-  width = window.innerWidth;
+  width = 100;
   viz_width = width;
-  height = window.innerHeight;
+  height = 100;
 
   renderer.setSize(width, height);
   camera.aspect = width / height;
