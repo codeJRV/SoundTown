@@ -16,29 +16,37 @@
 
     <div class="container">
 			<!-- header -->
-
-      <div id="header">
-				<div class="logo"><a href="#"><img src="images/soundTown.png" alt="" height="200" /></a></div>
-					<div class="dropdown">
-					<button class="dropbtn">Song Type</button>
-					<div class="dropdown-content">
-							<a href="index.html" class="act">Genre</a>
-							<a href="about-us.html">Artist</a>
-							<a href="articles.html">Album</a>
-							<a href="contact-us.html">Language</a>
-					</div>
-				</div>
-				<div class="dropdown">
-						<button class="dropbtn">Friends</button>
+			<div id="header">
+					<div class="logo"><a href="#"><img src="images/soundTown.png" alt="" height="200" /></a></div>
+						<div class="dropdown">
+						<button class="dropbtn">Song Type</button>
 						<div class="dropdown-content">
-								<a href="index.html" class="act">Henry</a>
-								<a href="about-us.html">David</a>
-								<a href="articles.html">Gabriella</a>
-								<a href="contact-us.html">Katlyn</a>
+								<a href="javascript:;" onclick="alert1" >Genre</a>
+								
+								<script>
+									function pooja(elt){
+										alert("hi"+elt.id);
+									}
+	
+								</script>
+							
+	
+								<a href="javascript:;" id="artist" onclick="pooja(this)" >Artist</a>
+								<a href="javascript:;" onclick="pooja(this)" >Album</a>
+								<a href="javascript:;" onclick="pooja(this)">Language</a>
 						</div>
 					</div>
+					<div class="dropdown">
+							<button class="dropbtn">Friends</button>
+							<div class="dropdown-content">
+									<a href="javascript:;" onclick="pooja(this)">Henry</a>
+									<a href="javascript:;" onclick="pooja(this)" >David</a>
+									<a href="javascript:;" onclick="pooja(this)" >Gabriella</a>
+									<a href="javascript:;" onclick="pooja(this)" >Katlyn</a>
+							</div>
+						</div>
+				</div>
 			</div>
-    </div>
       <!-- content -->
 		
 
