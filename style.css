@@ -8,7 +8,7 @@ object {vertical-align:top;outline:none}
 /* global */
 #header, #content, #footer {font-size:0.75em}
 .wrapper {width:100%;overflow:hidden}
-.container {width:1500px;margin:0 auto;position:relative}
+.container {width:1250px;margin:0;position:absolute}
 .col-1, .col-2, .col-3 {float:left}
 .fleft {float:left}
 .fright {float:right}
@@ -17,8 +17,8 @@ object {vertical-align:top;outline:none}
 .aligncenter {text-align:center}
 .wrapper {width:100%;overflow:hidden}
 p {margin:0;padding:0}
-.tail-top {background:url(images/tail-top.gif) center top repeat-x}
-.tail-top-left {height:150px;position:absolute;left:0;top:0;width:100%;background:url(images/tail-top-left.gif) repeat-x left top}
+.tail-top {height:100px;position:absolute;left:0;top:0;width:100%;background:url(images/tail-top.gif) center top repeat-x}
+.tail-top-left {height:100px;position:absolute;left:0;top:0;width:100%;background:url(images/tail-top-left.gif) repeat-x left top}
 .tail-bottom {background:url(images/tail-bottom.png) left bottom repeat-x}
 /* forms */
 #contacts-form {clear:right;width:100%;overflow:hidden;padding:15px 0 0 0}
@@ -57,7 +57,7 @@ h2 {font-size:36px}
 h3 {font-size:25px}
 .link {text-align:right;font-weight:bold}
 /*header*/
-#header {background:url(images/header-bg.jpg) repeat-x left top;height:150px}
+#header {background:url(images/header-bg.jpg) repeat-x left top;height:100px}
 #header .logo {        margin: 0 auto;
     text-align: center;
     width: 100%;
@@ -90,11 +90,11 @@ h3 {font-size:25px}
 }
 
 
-.box { position: relative; padding: 1em; margin: 0 0 1em 0; } 
+.box { position: relative; padding: 1em; margin: 0 0 1em 0; }
 .cream { background: #070707; color: #000; } 
 .corner { position: absolute; width: 20px; height: 20px; background: url(images/square.png) no-repeat; } 
 .TL { top: 0; left: 0; background-position: 0 0; } 
-.TR { top: 0; right: 0; background-position: 100% 0; } 
+.TR { top: 0; right: 0; background-position: 100% 0; }
 .BL { bottom: 0; left: 0; background-position: 0 100%; } 
 .BR { bottom: 0; right: 0; background-position: 100% 100%; }
 
