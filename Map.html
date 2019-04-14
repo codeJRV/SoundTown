@@ -18,6 +18,14 @@
 			<!-- header -->
 			<div id="header">
 					<div class="logo"><a href="#"><img src="images/soundTown.png" alt="" height="200" /></a></div>
+						<div class ="dropdown">
+							<button type="button" id="homebutton" class="dropbtn">Go back to home</button>
+						</div>
+						<script type="text/javascript">
+						    document.getElementById("homebutton").onclick = function () {
+						        location.href = "index.html";
+						    };
+						</script>
 						<div class="dropdown">
 						<input type="button" id = "filterbutton" class="dropbtn" value="Filter: Genre"></input>
 						<div class="dropdown-content">

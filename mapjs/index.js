@@ -1,12 +1,9 @@
 // This is a companion pen to go along with https://beta.observablehq.com/@grantcuster/using-three-js-for-2d-data-visualization. It shows a three.js pan and zoom example using d3-zoom working on 100,000 points. The code isn't very organized here so I recommend you check out the notebook to read about what is going on.
 
 let point_num = 960;
-
-//let width = window.innerWidth;
 let width = 2000;
 let viz_width = width;
 let height = 600;
-
 let fov = 40;
 let near = 10;
 let far = 7000;
@@ -53,7 +50,7 @@ function setUpZoom() {
   let initial_scale = getScaleFromZ(far);
   var initial_transform = d3.zoomIdentity.translate(viz_width/2, height/2).scale(initial_scale);    
   zoom.transform(view, initial_transform);
-  camera.position.set(0, 0, far);
+  camera.position.set(far/2,far/5 , far);
 }
 setUpZoom();
 
@@ -61,6 +58,7 @@ circle_sprite= new THREE.TextureLoader().load(
   "https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png"
 )
 
+//Create the Map
 var mydata = JSON.parse(data);
 var GlobalFilterType =mydata.tsnemodelA10;
 var GlobalFriendName =700;
@@ -90,7 +88,6 @@ for (let i = 700; i < point_num; i++) {
   let point = { position, name, group };
   data_points.push(point);
 }
-
 
 
 let generated_points = data_points;

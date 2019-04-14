@@ -21,6 +21,7 @@ function info(msg) {
 }
 
 function authorizeUser() {
+    console.log("In authorizeUser");
     var scopes = 'user-top-read user-read-recently-played user-read-currently-playing user-read-playback-state user-modify-playback-state';
     var url = 'https://accounts.spotify.com/authorize?client_id=' + SPOTIFY_CLIENT_ID +
         '&response_type=token' +
@@ -28,6 +29,7 @@ function authorizeUser() {
         '&scope=' + encodeURIComponent(scopes) +
         '&redirect_uri=' + encodeURIComponent(SPOTIFY_REDIRECT_URI);
     document.location = url;
+    console.log("authorizeUser completed successfully");
 }
 
 function parseArgs() {
