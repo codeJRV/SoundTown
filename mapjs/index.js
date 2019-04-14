@@ -234,7 +234,7 @@ function checkIntersects_songplay(mouse_position) {
         //alert("group",datum.group);
 		  //alert("play a song here");  
       minsong = Math.ceil(0);
-      maxsong = Math.floor(6);
+      maxsong = Math.floor(songdata["song"].length -1 );
       var songindex=Math.floor(Math.random() * (maxsong - minsong + 1)) + minsong;
       console.log("index"+songindex);
       document.getElementById("spotifyplayer").src = songdata.song[songindex];
@@ -489,7 +489,7 @@ function checkIntersects_songplay(mouse_position) {
         //alert("group",datum.group);
       //alert("play a song here");  
       minsong = Math.ceil(0);
-      maxsong = Math.floor(6);
+      maxsong = Math.floor(songdata["song"].length -1 );
       var songindex=Math.floor(Math.random() * (maxsong - minsong + 1)) + minsong;
       console.log("index"+songindex);
       document.getElementById("spotifyplayer").src = songdata.song[songindex];
