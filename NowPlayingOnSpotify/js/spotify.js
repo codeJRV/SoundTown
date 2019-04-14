@@ -1,175 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="https://sp-bootstrap.global.ssl.fastly.net/7.4.1/sp-bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="images/favicon.png">
-    <link rel="stylesheet" href="css/style.css">
 
-    <title> Your Play History</title>
-
-    <style>
-        body {
-            margin-left:20px;
-            margin-right:20px;
-        }
-        td a, .controls {
-            cursor:pointer
-        }
-    </style>
-</head>
-  <body >
-    <div>
-
-        <div class="wrap">
-
-            <div class="player paused">
-            
-              <div class="progress-bar">
-                <div class="runner"></div>
-              </div>
-              <div class="album-art">
-                <div class="cover"></div>
-              </div>
-              
-              <div class="description">
-                <div class="title">Something from nothing  </div>
-                <div class="sub-title">by Foo Fighters, Sonic highways</div>
-              </div>
-              
-              <div class="visualizer">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-                
-              <div class="play-button">
-                <div class="lp-background"></div>
-                <i class="mdi mdi-play"></i>
-                <i class="mdi mdi-pause"></i>
-              </div>
-              
-              <div class="time-indicator">
-                <i class="mdi mdi-clock"></i>
-                <span class="time">03:39</span>
-              </div>
-              
-              
-            </div>
-            
-
-
-        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
-      
-    </div>
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div id='main' class="jumbotron jumbotron-hero container-fluid">
-          <div class='intro'> 
-              <div  class="container" id="jumbo-dialog">
-                <h1 class='ttext'>Now Playing On Spotify</h1>
-                <p class='ttext'>
-                    A demo of all the information that the Spotify API can provide about your recent
-                    listening.
-                </p>
-                <br>
-                <a class="btn btn-primary btn-lg go" id='go' role="button">Login with Spotify to get started</a>
-              </div>
-          </div>
-      </div>
-      <div id="work" class="work" style="display:none"> 
-        <h1> Now playing on Spotify</h1>
-        <img id='now-playing-cover-art' style="margin: 0px 20px 0px 20px;" class='pull-left' width="300px" src="">
-        <h2 id='now-playing-song-name'> </h2>
-        <h3 id='now-playing-artist-name'> </h3>
-        <div> Play time: <span id='now-playing-progress'> </span> </div>
-        <div> Remaining: <span id='now-playing-remains'> </span> </div>
-        <div> <a id='now-playing-context' href=''> context </a> </div>
-        <div> State: <span id='now-playing-playing'> </span> </div>
-        <div> 
-            <a class='controls next' id="next"> next </a>
-            <a class='controls pause' id="pause"> pause </a>
-            <a class='controls play' id="play"> play </a>
-            <div id="info"> </div>
-       </div>
-
-       <div>
-        <div> <br clear="all"> </div>
-        <h2> Your Play History </h2>
-        <p> These are the tracks you've most recently played on Spotify.
-        <table class=table>
-            <thead>
-                <tr>
-                <th> # </th>
-                <th> Name </th>
-                <th> Artist </th>
-                <th> Duration </th>
-                <th> Context </th>
-                <th> Play time </th>
-            </thead>
-            <tbody id="history">
-            </tbody>
-        </table>
-
-       </div>
-
-       <br>
-    </div>
-    <script src="lib/jquery-1.11.1.min.js"></script>
-    <script src="https://sp-bootstrap.global.ssl.fastly.net/7.4.1/sp-bootstrap.min.js"></script>
-    <script src="lib/underscore-min.js"></script>
-    <script src="config.js"></script>
-<script>
 "use strict";
+
 var accessToken = null;
+var $visualizers = $('.visualizer>div');
+var $progressBar = $('.progress-bar');
+var $progressBarRunner = $progressBar.find('.runner');
+var songLength = 219; //in seconds
+var percentage = 0
+var $time = $('.time');
+var $player = $('.player');
+var state = "paused"
+
 
 function error(msg) {
     info(msg);
@@ -266,6 +107,7 @@ function playNext(callback) {
 }
 
 function playTrack(uri, callback) {
+    $player.toggleClass('paused').toggleClass('playing');
     var url = 'https://api.spotify.com/v1/me/player/play';
     callSpotify("PUT", url, {uris:[uri]}, callback);
 }
@@ -276,16 +118,22 @@ function seek(position_ms) {
 }
 
 function pause() {
+    $player.toggleClass('paused').toggleClass('playing');
     var url = 'https://api.spotify.com/v1/me/player/pause';
     callSpotify("PUT", url, null, function(status, data) { refreshNowPlaying(); });
+
 }
 
 function play() {
+    $player.toggleClass('paused').toggleClass('playing');
     var url = 'https://api.spotify.com/v1/me/player/play';
     callSpotify("PUT", url, null, function(status, data) { refreshNowPlaying(); });
+    
+
 }
 
 function playArtist(uri, callback) {
+    $player.toggleClass('paused').toggleClass('playing');
     var url = 'https://api.spotify.com/v1/me/player/play';
     callSpotify("PUT", url, {context_uri:uri}, callback);
 }
@@ -304,6 +152,8 @@ function refreshNowPlaying() {
         var time_delta = now() - (data.timestamp + data.progress_ms);
         if (data.item.album.images.length > 0) {
             $("#now-playing-cover-art").attr('src', data.item.album.images[0].url);
+            document.getElementById('album-cover').src=data.item.album.images[0].url;
+            
         }
         var progress = Math.round(data.progress_ms / 1000);
         var sprogress = fmtTime(progress);
@@ -314,7 +164,11 @@ function refreshNowPlaying() {
         var uri = data.context ? data.context.uri :  " ";
 
         $("#now-playing-song-name").text(data.item.name);
+        document.getElementById("SongTitle").innerHTML = data.item.name;
+
         $("#now-playing-artist-name").text(data.item.artists[0].name);
+        document.getElementById("SongArtist").innerHTML = data.item.artists[0].name;
+
         $("#now-playing-progress").text(sprogress);
         $("#now-playing-remains").text(sremains);
         $("#now-playing-context").text( ctx);
@@ -481,7 +335,7 @@ $(document).ready(
                 pause();
             });
 
-            $("#play").on("click", function() {
+            $("#play").on("click", function() {      
                 play();
             });
 
@@ -508,14 +362,7 @@ $(document).ready(
 );
 
 
-var $visualizers = $('.visualizer>div');
-var $progressBar = $('.progress-bar');
-var $progressBarRunner = $progressBar.find('.runner');
-var songLength = 219; //in seconds
-var percentage = 0
-var $time = $('.time');
-var $player = $('.player');
-var state = "paused"
+
 
 // var playRunner = null;
 
@@ -535,7 +382,7 @@ var state = "paused"
 // };
 
 $('.play-button').on('click', function() {
-  $player.toggleClass('paused').toggleClass('playing');
+//   $player.toggleClass('paused').toggleClass('playing');
   if(state == "playing"){
       pause();
       state = "paused";
@@ -570,6 +417,3 @@ $('.play-button').on('click', function() {
 
 // clearInterval(playRunner);
 
-</script>
-</body>
-</html>
