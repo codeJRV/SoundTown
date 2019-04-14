@@ -1,10 +1,12 @@
 // This is a companion pen to go along with https://beta.observablehq.com/@grantcuster/using-three-js-for-2d-data-visualization. It shows a three.js pan and zoom example using d3-zoom working on 100,000 points. The code isn't very organized here so I recommend you check out the notebook to read about what is going on.
 
-let point_num = 10000;
+let point_num = 960;
 
-let width = window.innerWidth;
+//let width = window.innerWidth;
+let width = 100;
 let viz_width = width;
-let height = window.innerHeight;
+//let height = window.innerHeight;
+let height = 100;
 
 let fov = 40;
 let near = 10;
@@ -19,9 +21,9 @@ let camera = new THREE.PerspectiveCamera(
 );
 
 window.addEventListener('resize', () => {
-  width = window.innerWidth;
+  width = 100;
   viz_width = width;
-  height = window.innerHeight;
+  height = 100;
 
   renderer.setSize(width, height);
   camera.aspect = width / height;
@@ -32,18 +34,6 @@ let color_array = [
   "#ffffff",
   "#1f78b4",
   "#ff7f00"
-  
-  /*
-  "#33a02c",
-  "#fb9a99",
-  "#e31a1c",
-  
-  "#fdbf6f",
-  "#ff7f00",
-  "#6",
-  "#cab2d6",
-  "#ffff99"
-  */
 ]
 
 // Add canvas
@@ -72,17 +62,18 @@ circle_sprite= new THREE.TextureLoader().load(
   "https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png"
 )
 
-let radius = 1500;
-
+//plot in a circle
+/*
+let radius = 3000;
 // Random point in circle code from https://stackoverflow.com/questions/32642399/simplest-way-to-plot-points-randomly-inside-a-circle
 function randomPosition(radius) {
   var pt_angle = Math.random() * 2 * Math.PI;
   var pt_radius_sq = Math.random() * radius * radius;
   var pt_x = Math.sqrt(pt_radius_sq) * Math.cos(pt_angle);
+	//console.log("pt-x"+pt_x);
   var pt_y = Math.sqrt(pt_radius_sq) * Math.sin(pt_angle);
   return [pt_x, pt_y];
 }
-
 
 let data_points = [];
 for (let i = 0; i < 7000; i++) {
@@ -100,6 +91,35 @@ for (let i = 7000; i < point_num; i++) {
   let point = { position, name, group };
   data_points.push(point);
 }
+*/
+var mydata = JSON.parse(data);
+var tsne=mydata.tsnemodelA10;
+function randomPosition(i) {
+  var tt= tsne[i];
+  var pt_x = tt["coordinates"][0] * 3000;
+	console.log("pt_x"+pt_x);
+  var pt_y = tt["coordinates"][1] * 3000;
+  return [pt_x, pt_y];
+}
+
+let data_points = [];
+for (let i = 0; i < 300; i++) {
+  let position = randomPosition(i);
+  let name = 'Point ' + i;
+  let group = Math.floor(Math.random() * 1);
+  let point = { position, name, group };
+  data_points.push(point);
+}
+
+for (let i = 300; i < point_num; i++) {
+  let position = randomPosition(i);
+  let name = 'Point ' + i;
+  let group = Math.floor(Math.random() * 3);
+  let point = { position, name, group };
+  data_points.push(point);
+}
+
+
 
 let generated_points = data_points;
 
@@ -230,7 +250,10 @@ function checkIntersects_songplay(mouse_position) {
     if(datum.group!=0)
       {
         //alert("group",datum.group);
-        alert("play a song here");  
+		  alert("play a song here");  
+		document.getElementById("player").src="https://www.youtube.com/embed/CnAmeh0-E-U";
+		//document.getElementById('some_frame_id').contentWindow.location.reload();
+        
       }
   } 
 }
@@ -315,7 +338,7 @@ function hideTooltip() {
   updateTooltip();
 }
 
-// Change color scheme based on selected friend
+// Change shape based on selected friend
 function ChangePointCloud(elt){
   
   if(elt.id == "Friend 1")
@@ -338,7 +361,6 @@ for (let i = 0; i < pgroup1; i++) {
   let position = randomPosition(radius);
   let name = 'Point ' + i;
   let group = Math.floor(Math.random() * 1);
-//console.log("group is",group);
   let point = { position, name, group };
   data_points.push(point);
 }

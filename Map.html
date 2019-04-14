@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Feel The Music</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script src="js/cufon-yui.js" type="text/javascript"></script>
+<script src="js/cufon-replace.js" type="text/javascript"></script>
+<script src="js/Bauhaus_Md_BT_400.font.js" type="text/javascript"></script>
+<!--[if lt IE 7]>
+<script type="text/javascript" src="js/ie_png.js"></script>
+<script type="text/javascript">ie_png.fix('.png');</script>
+<![endif]-->
+</head>
+<body id="page1">
+
+    <div class="container">
+			<!-- header -->
+			<div id="header">
+					<div class="logo"><a href="#"><img src="images/soundTown.png" alt="" height="200" /></a></div>
+						<div class="dropdown">
+						<input type="button" id = "filterbutton" class="dropbtn" value="Filter: Genre"></input>
+						<div class="dropdown-content">
+								<a href="javascript:;" id="artist" onclick="ChangePointCloud(this)" >Artist</a>
+								<a href="javascript:;" id="album" onclick="ChangePointCloud(this)" >Album</a>
+								<a href="javascript:;" id="Language" onclick="ChangePointCloud(this)">Language</a>
+						</div>
+					</div>
+					<div class="dropdown">
+							<input type="button" id = "friendbutton" value="Friend: No one" class="dropbtn"></input>
+							<div class="dropdown-content">
+									<a href="javascript:;" id="Henry" onclick="ChangePointCloud(this)">Henry</a>
+									<a href="javascript:;" id="David" onclick="ChangePointCloud(this)" >David</a>
+									<a href="javascript:;" id="Gab" onclick="ChangePointCloud(this)" >Gabriella</a>
+							</div>
+						</div>
+				</div>
+			</div>
+      <!-- content -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js'></script>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.js'></script>		
+<script type="text/javascript" src="mapjs/data.json"></script>
+	  <div id="main" > 
+		<script  src="mapjs/index.js"></script>
+	</div>
+	<div id="player1">
+				<iframe width="2000" height="50" src="https://www.youtube.com/embed/pFzd9hlk-_o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	  </div>
+	  
+	  
+  </div>
+  <div class="tail-bottom png">
+    <!-- footer -->
+    <div id="footer">
+      <div class="container">
+        <div> </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"> Cufon.now(); </script>
+</body>
+</html>
