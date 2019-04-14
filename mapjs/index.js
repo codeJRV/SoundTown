@@ -62,7 +62,10 @@ circle_sprite= new THREE.TextureLoader().load(
 )
 
 var mydata = JSON.parse(data);
+var GlobalFilterType =mydata.tsnemodelA10;
+var GlobalFriendName =700;
 var tsne=mydata.tsnemodelA10;
+
 function randomPosition(i) {
   var tt= tsne[i];
   var pt_x = tt["coordinates"][0] * 3000;
@@ -375,28 +378,49 @@ function makeNewCloud(map_model, pgroup,color_array){
 // Change shape based on selected friend
 function ChangePointCloud(elt){
   
-  var map_model=mydata.tsnemodelA10;
   let color_array = [
-  "#ffffff",
-  "#1f78b4",
-  "#ff7f00"
-  ]
-  pgroup=700
+        "#ffffff",
+        "#1f78b4",
+        "#ff7f00"]
+
+  if(elt.id=="artist")
+  {
+    GlobalFilterType=mydata.tsnemodelA00;
+    document.getElementById("filterbutton").value="Filter: Artist";
+    
+  }
+  else if(elt.id=="album")
+  {
+    GlobalFilterType=mydata.tsnemodelA04;
+    document.getElementById("filterbutton").value="Filter: Album";
+
+  }
+  else if(elt.id=="Language")
+  {
+    GlobalFilterType=mydata.umapmodelA04;
+    document.getElementById("filterbutton").value="Filter: Language";
+
+  }
+  
   if(elt.id == "Henry")
     {
-      pgroup = 800;
+      GlobalFriendName = 800;
+      document.getElementById("friendbutton").value="Friend: Henry";
     }
   
   else if(elt.id == "David")
     {
-      pgroup = 100;
+      GlobalFriendName = 500;
+      document.getElementById("friendbutton").value="Friend: David";
     }
   
   else if(elt.id == "Gab")
     {
-      pgroup = 500;
+      GlobalFriendName = 100;
+      document.getElementById("friendbutton").value="Friend: Gabriella";
     }
-  makeNewCloud(map_model, pgroup,color_array);
+
+  makeNewCloud(GlobalFilterType, GlobalFriendName,color_array);
 
 
 }
