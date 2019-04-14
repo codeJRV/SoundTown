@@ -19,30 +19,19 @@
 			<div id="header">
 					<div class="logo"><a href="#"><img src="images/soundTown.png" alt="" height="200" /></a></div>
 						<div class="dropdown">
-						<button class="dropbtn">Song Type</button>
+						<input type="button" id = "filterbutton" class="dropbtn" value="Filter: Genre"></input>
 						<div class="dropdown-content">
-								<a href="javascript:;" onclick="alert1" >Genre</a>
-								
-								<script>
-									function pooja(elt){
-										alert("hi"+elt.id);
-									}
-	
-								</script>
-							
-	
-								<a href="javascript:;" id="artist" onclick="pooja(this)" >Artist</a>
-								<a href="javascript:;" onclick="pooja(this)" >Album</a>
-								<a href="javascript:;" onclick="pooja(this)">Language</a>
+								<a href="javascript:;" id="artist" onclick="ChangePointCloud(this)" >Artist</a>
+								<a href="javascript:;" id="album" onclick="ChangePointCloud(this)" >Album</a>
+								<a href="javascript:;" id="Language" onclick="ChangePointCloud(this)">Language</a>
 						</div>
 					</div>
 					<div class="dropdown">
-							<button class="dropbtn">Friends</button>
+							<input type="button" id = "friendbutton" value="Friend: No one" class="dropbtn"></input>
 							<div class="dropdown-content">
-									<a href="javascript:;" onclick="ChangePointCloud(this)">Henry</a>
-									<a href="javascript:;" onclick="ChangePointCloud(this)" >David</a>
-									<a href="javascript:;" onclick="ChangePointCloud(this)" >Gabriella</a>
-									<a href="javascript:;" onclick="ChangePointCloud(this)" >Katlyn</a>
+									<a href="javascript:;" id="Henry" onclick="ChangePointCloud(this)">Henry</a>
+									<a href="javascript:;" id="David" onclick="ChangePointCloud(this)" >David</a>
+									<a href="javascript:;" id="Gab" onclick="ChangePointCloud(this)" >Gabriella</a>
 							</div>
 						</div>
 				</div>

@@ -61,38 +61,11 @@ circle_sprite= new THREE.TextureLoader().load(
   "https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png"
 )
 
-//plot in a circle
-/*
-let radius = 3000;
-// Random point in circle code from https://stackoverflow.com/questions/32642399/simplest-way-to-plot-points-randomly-inside-a-circle
-function randomPosition(radius) {
-  var pt_angle = Math.random() * 2 * Math.PI;
-  var pt_radius_sq = Math.random() * radius * radius;
-  var pt_x = Math.sqrt(pt_radius_sq) * Math.cos(pt_angle);
-	//console.log("pt-x"+pt_x);
-  var pt_y = Math.sqrt(pt_radius_sq) * Math.sin(pt_angle);
-  return [pt_x, pt_y];
-}
-
-let data_points = [];
-for (let i = 0; i < 7000; i++) {
-  let position = randomPosition(radius);
-  let name = 'Point ' + i;
-  let group = Math.floor(Math.random() * 1);
-  let point = { position, name, group };
-  data_points.push(point);
-}
-
-for (let i = 7000; i < point_num; i++) {
-  let position = randomPosition(radius);
-  let name = 'Point ' + i;
-  let group = Math.floor(Math.random() * 3);
-  let point = { position, name, group };
-  data_points.push(point);
-}
-*/
 var mydata = JSON.parse(data);
+var GlobalFilterType =mydata.tsnemodelA10;
+var GlobalFriendName =700;
 var tsne=mydata.tsnemodelA10;
+
 function randomPosition(i) {
   var tt= tsne[i];
   var pt_x = tt["coordinates"][0] * 3000;
@@ -102,7 +75,7 @@ function randomPosition(i) {
 }
 
 let data_points = [];
-for (let i = 0; i < 300; i++) {
+for (let i = 0; i < 700; i++) {
   let position = randomPosition(i);
   let name = 'Point ' + i;
   let group = Math.floor(Math.random() * 1);
@@ -110,7 +83,7 @@ for (let i = 0; i < 300; i++) {
   data_points.push(point);
 }
 
-for (let i = 300; i < point_num; i++) {
+for (let i = 700; i < point_num; i++) {
   let position = randomPosition(i);
   let name = 'Point ' + i;
   let group = Math.floor(Math.random() * 3);
@@ -337,73 +310,117 @@ function hideTooltip() {
   updateTooltip();
 }
 
+function makeNewCloud(map_model, pgroup,color_array){
+
+
+    function randomPosition(i) {
+      var tt= map_model[i];
+      var pt_x = tt["coordinates"][0] * 3000;
+      console.log("pt_x"+pt_x);
+      var pt_y = tt["coordinates"][1] * 3000;
+      return [pt_x, pt_y];
+    }
+
+    let data_points = [];
+    for (let i = 0; i < pgroup; i++) {
+      let position = randomPosition(i);
+      let name = 'Point ' + i;
+      let group = Math.floor(Math.random() * 1);
+      let point = { position, name, group };
+      data_points.push(point);
+    }
+
+    for (let i = pgroup; i < point_num; i++) {
+      let position = randomPosition(i);
+      let name = 'Point ' + i;
+      let group = Math.floor(Math.random() * 3);
+      let point = { position, name, group };
+      data_points.push(point);
+    }
+
+    let generated_points = data_points;
+
+    let pointsGeometry = new THREE.Geometry();
+
+    let colors = [];
+    for (let datum of generated_points) {
+      // Set vector coordinates from data
+      let vertex = new THREE.Vector3(datum.position[0], datum.position[1], 0);
+      pointsGeometry.vertices.push(vertex);
+      let color = new THREE.Color(color_array[datum.group]);
+      colors.push(color);
+    }
+    pointsGeometry.colors = colors;
+
+    let pointsMaterial = new THREE.PointsMaterial({
+      size: 8,
+      sizeAttenuation: false,
+      vertexColors: THREE.VertexColors,
+      map: circle_sprite,
+      transparent: true
+    });
+
+    let points = new THREE.Points(pointsGeometry, pointsMaterial);
+
+    let scene = new THREE.Scene();
+    scene.add(points);
+    scene.background = new THREE.Color(0xefefef);
+
+    // Three.js render loop
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
+
+}
+
 // Change shape based on selected friend
 function ChangePointCloud(elt){
   
-  if(elt.id == "Friend 1")
+  let color_array = [
+        "#ffffff",
+        "#1f78b4",
+        "#ff7f00"]
+
+  if(elt.id=="artist")
+  {
+    GlobalFilterType=mydata.tsnemodelA00;
+    document.getElementById("filterbutton").value="Filter: Artist";
+    
+  }
+  else if(elt.id=="album")
+  {
+    GlobalFilterType=mydata.tsnemodelA04;
+    document.getElementById("filterbutton").value="Filter: Album";
+
+  }
+  else if(elt.id=="Language")
+  {
+    GlobalFilterType=mydata.umapmodelA04;
+    document.getElementById("filterbutton").value="Filter: Language";
+
+  }
+  
+  if(elt.id == "Henry")
     {
-      pgroup1 = 9000;
+      GlobalFriendName = 800;
+      document.getElementById("friendbutton").value="Friend: Henry";
     }
   
-  else if(elt.id == "Friend 2")
+  else if(elt.id == "David")
     {
-      pgroup1 = 2000;
+      GlobalFriendName = 500;
+      document.getElementById("friendbutton").value="Friend: David";
     }
   
-  else if(elt.id == "Friend 3")
+  else if(elt.id == "Gab")
     {
-      pgroup1 = 7000;
+      GlobalFriendName = 100;
+      document.getElementById("friendbutton").value="Friend: Gabriella";
     }
-  
-let data_points = [];
-for (let i = 0; i < pgroup1; i++) {
-  let position = randomPosition(radius);
-  let name = 'Point ' + i;
-  let group = Math.floor(Math.random() * 1);
-  let point = { position, name, group };
-  data_points.push(point);
-}
 
-for (let i = pgroup1; i < point_num; i++) {
-  let position = randomPosition(radius);
-  let name = 'Point ' + i;
-  let group = Math.floor(Math.random() * 3);
-  let point = { position, name, group };
-  data_points.push(point);
-}
+  makeNewCloud(GlobalFilterType, GlobalFriendName,color_array);
 
-let generated_points = data_points;
 
-let pointsGeometry = new THREE.Geometry();
-
-let colors = [];
-for (let datum of generated_points) {
-  // Set vector coordinates from data
-  let vertex = new THREE.Vector3(datum.position[0], datum.position[1], 0);
-  pointsGeometry.vertices.push(vertex);
-  let color = new THREE.Color(color_array[datum.group]);
-  colors.push(color);
-}
-pointsGeometry.colors = colors;
-
-let pointsMaterial = new THREE.PointsMaterial({
-  size: 8,
-  sizeAttenuation: false,
-  vertexColors: THREE.VertexColors,
-  map: circle_sprite,
-  transparent: true
-});
-
-let points = new THREE.Points(pointsGeometry, pointsMaterial);
-
-let scene = new THREE.Scene();
-scene.add(points);
-scene.background = new THREE.Color(0xefefef);
-
-// Three.js render loop
-function animate() {
-  requestAnimationFrame(animate);
-  renderer.render(scene, camera);
-}
-animate();
 }
