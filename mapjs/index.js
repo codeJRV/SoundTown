@@ -50,7 +50,7 @@ function setUpZoom() {
   let initial_scale = getScaleFromZ(far);
   var initial_transform = d3.zoomIdentity.translate(viz_width/2, height/2).scale(initial_scale);    
   zoom.transform(view, initial_transform);
-  camera.position.set(far/2,far/5 , far);
+  camera.position.set(far/1.9,far/5 , far);
 }
 setUpZoom();
 
@@ -60,6 +60,7 @@ circle_sprite= new THREE.TextureLoader().load(
 
 //Create the Map
 var mydata = JSON.parse(data);
+var songdata = JSON.parse(songs);
 var GlobalFilterType =mydata.tsnemodelA10;
 var GlobalFriendName =700;
 var tsne=mydata.tsnemodelA10;
@@ -67,7 +68,7 @@ var tsne=mydata.tsnemodelA10;
 function randomPosition(i) {
   var tt= tsne[i];
   var pt_x = tt["coordinates"][0] * 3000;
-	console.log("pt_x"+pt_x);
+	//console.log("pt_x"+pt_x);
   var pt_y = tt["coordinates"][1] * 3000;
   return [pt_x, pt_y];
 }
@@ -219,8 +220,13 @@ function checkIntersects_songplay(mouse_position) {
     if(datum.group!=0)
       {
         //alert("group",datum.group);
-		  alert("play a song here");  
-		document.getElementById("player").src="https://www.youtube.com/embed/CnAmeh0-E-U";
+		  //alert("play a song here");  
+      minsong = Math.ceil(0);
+      maxsong = Math.floor(6);
+      var songindex=Math.floor(Math.random() * (maxsong - minsong + 1)) + minsong;
+      console.log("index"+songindex);
+      document.getElementById("spotifyplayer").src = songdata.song[songindex];
+		//document.getElementById("player").src="https://www.youtube.com/embed/CnAmeh0-E-U";
 		//document.getElementById('some_frame_id').contentWindow.location.reload();
         
       }
