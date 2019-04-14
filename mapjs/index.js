@@ -29,7 +29,8 @@ window.addEventListener('resize', () => {
 let color_array = [
   "#ffffff",
   "#1f78b4",
-  "#ff7f00"
+  "#ff7f00",
+  "#8AAF1D"
 ]
 
 // Add canvas
@@ -85,7 +86,7 @@ for (let i = 0; i < 700; i++) {
 for (let i = 700; i < point_num; i++) {
   let position = randomPosition(i);
   let name = 'Point ' + i;
-  let group = Math.floor(Math.random() * 3);
+  let group = Math.floor(Math.random() * 4);
   let point = { position, name, group };
   data_points.push(point);
 }
@@ -313,7 +314,7 @@ function hideTooltip() {
   updateTooltip();
 }
 
-function makeNewCloud(map_model, pgroup,color_array){
+function makeNewCloud(map_model, pgroup,color_array,n){
 
 
     function randomPosition(i) {
@@ -336,7 +337,7 @@ function makeNewCloud(map_model, pgroup,color_array){
     for (let i = pgroup; i < point_num; i++) {
       let position = randomPosition(i);
       let name = 'Point ' + i;
-      let group = Math.floor(Math.random() * 3);
+      let group = Math.floor(Math.random() * n);
       let point = { position, name, group };
       data_points.push(point);
     }
@@ -380,28 +381,42 @@ function makeNewCloud(map_model, pgroup,color_array){
 
 // Change shape based on selected friend
 function ChangePointCloud(elt){
-  
-  let color_array = [
-        "#ffffff",
-        "#1f78b4",
-        "#ff7f00"]
-
+var n=4;
   if(elt.id=="artist")
   {
+     color_array = [
+        "#ffffff",
+        "#1f78b4",
+        "#ff7f00",
+        "#ff33fc",
+        "#ffc300"]
+        n=5;
     GlobalFilterType=mydata.tsnemodelA00;
     document.getElementById("filterbutton").value="Filter: Artist";
     
   }
-  else if(elt.id=="album")
-  {
-    GlobalFilterType=mydata.tsnemodelA04;
-    document.getElementById("filterbutton").value="Filter: Album";
-
-  }
   else if(elt.id=="Language")
   {
-    GlobalFilterType=mydata.umapmodelA04;
+         color_array = [
+        "#ffffff",,
+        "#ff3346",
+        "#ffc300",
+        "#4CFF33"]
+        n=4;
+    GlobalFilterType=mydata.tsnemodelA04;
     document.getElementById("filterbutton").value="Filter: Language";
+
+  }
+  else if(elt.id=="album")
+  {
+         color_array = [
+        "#ffffff",
+        "#ff7f00",
+        "#4CFF33",
+        "#ffc300"]
+        n=4;
+    GlobalFilterType=mydata.umapmodelA04;
+    document.getElementById("filterbutton").value="Filter: Album";
 
   }
   
@@ -423,7 +438,7 @@ function ChangePointCloud(elt){
       document.getElementById("friendbutton").value="Friend: Gabriella";
     }
 
-  makeNewCloud(GlobalFilterType, GlobalFriendName,color_array);
+  makeNewCloud(GlobalFilterType, GlobalFriendName,color_array,n);
 
 
 }
