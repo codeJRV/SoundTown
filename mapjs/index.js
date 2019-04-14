@@ -33,6 +33,8 @@ let color_array = [
   "#8AAF1D"
 ]
 
+globalfilternameforfriend="Genre";
+
 // Add canvas
 let renderer = new THREE.WebGLRenderer();
 renderer.setSize(width, height);
@@ -587,7 +589,22 @@ function hideTooltip() {
 function ChangePointCloud(elt){
 var n=4;
 var dict_filter_local={};
-  if(elt.id=="mood")
+document.getElementById("spotifyplayer") 
+
+if(elt.id=="mood")
+{
+  globalfilternameforfriend="mood";
+}
+else if (elt.id=="Charts")
+{
+globalfilternameforfriend="Charts";
+}
+else if(elt.id=="Language")
+{
+globalfilternameforfriend="Language";
+}
+
+  if(globalfilternameforfriend=="mood")
   {
     
     dict_filter_local[0] = "nothing";
@@ -607,7 +624,7 @@ var dict_filter_local={};
     document.getElementById("filterbutton").value="Filter: Mood";
     
   }
-  else if(elt.id=="Charts")
+  else if(globalfilternameforfriend=="Charts")
   {
     dict_filter_local[0] = "nothing";
     dict_filter_local[1] = "Charts: Top 50";
@@ -623,7 +640,7 @@ var dict_filter_local={};
     document.getElementById("filterbutton").value="Filter: Charts";
 
   }
-  else if(elt.id=="Language")
+  else if(globalfilternameforfriend=="Language")
   {
     dict_filter_local[0] = "nothing";
     dict_filter_local[1] = "Language: English";
@@ -639,8 +656,9 @@ var dict_filter_local={};
     document.getElementById("filterbutton").value="Filter: Language";
 
   }
+  
 
-    else if(elt.id=="genre")
+    else if(globalfilternameforfriend=="genre")
   {
     
       dict_filter_local[0] = "nothing";
@@ -648,11 +666,11 @@ var dict_filter_local={};
       dict_filter_local[2] = "Genre: Blues";
       dict_filter_local[3] = "Genre: Pop";
         color_array = [
-  "#ffffff",
-  "#1f78b4",
-  "#ff7f00",
-  "#8AAF1D"
-]
+            "#ffffff",
+            "#1f78b4",
+            "#ff7f00",
+            "#8AAF1D"
+          ]
         n=4;
     GlobalFilterType=mydata.tsnemodelA10;
     document.getElementById("filterbutton").value="Filter: Genre";
