@@ -77,7 +77,7 @@ function randomPosition(i) {
 let data_points = [];
 for (let i = 0; i < 700; i++) {
   let position = randomPosition(i);
-  let name = 'Point ' + i;
+  let name = 'Song ' + i;
   let group = Math.floor(Math.random() * 1);
   let point = { position, name, group };
   data_points.push(point);
@@ -85,7 +85,7 @@ for (let i = 0; i < 700; i++) {
 
 for (let i = 700; i < point_num; i++) {
   let position = randomPosition(i);
-  let name = 'Point ' + i;
+  let name = 'Song ' + i;
   let group = Math.floor(Math.random() * 4);
   let point = { position, name, group };
   data_points.push(point);
