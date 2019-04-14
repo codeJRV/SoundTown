@@ -109,6 +109,7 @@ function playNext(callback) {
 }
 
 function playTrack(uri, callback) {
+    console.log("track clicked");
     $player.toggleClass('paused').toggleClass('playing');
     var url = 'https://api.spotify.com/v1/me/player/play';
     callSpotify("PUT", url, {uris:[uri]}, callback);
@@ -231,8 +232,10 @@ function refreshDevices() {
 }
 
 function getTrackAnchor(track) {
+
     var a = $("<a>").text(track.name);
     a.on("click", function() {
+        console.log("in get track anchor");
         playTrack(track.uri, function(data) {
             refreshNowPlaying();
         });
@@ -251,6 +254,7 @@ function getArtistAnchor(name, uri) {
 }
 
 function refreshPlayHistory() {
+
     fetchPlayHistory(function(status, items) {
         var tbl = $("#history");
         _.each(items, function(item, i) {
@@ -315,7 +319,7 @@ $(document).ready(
         }
         var args = parseArgs();
         window.location.hash = "";
-
+        console.log("I am here in ready");
         $(".work").hide();
         if ('error' in args) {
             error("Sorry, I can't read your play history Spotify without authorization");
@@ -341,6 +345,8 @@ $(document).ready(
                 play();
             });
 
+            
+
             $(".work").show();
             $(".intro").hide();
             accessToken = args['access_token'];
@@ -363,8 +369,18 @@ $(document).ready(
     }
 );
 
+$('.play-button').on('click', function() {
+            //   $player.toggleClass('paused').toggleClass('playing');
+              if(state == "playing"){
+                  pause();
+                  state = "paused";
+                }
+              else{
+                  play();
+                  state = "playing";
+              }
 
-
+            });
 
 // var playRunner = null;
 
@@ -383,18 +399,7 @@ $(document).ready(
 //   }, 250);
 // };
 
-$('.play-button').on('click', function() {
-//   $player.toggleClass('paused').toggleClass('playing');
-  if(state == "playing"){
-      pause();
-      state = "paused";
-    }
-  else{
-      play();
-      state = "playing";
-  }
 
-});
 
 
 // $('.progress-bar').on('click', function(e) {
