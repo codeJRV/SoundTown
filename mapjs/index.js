@@ -1,6 +1,7 @@
 // This is a companion pen to go along with https://beta.observablehq.com/@grantcuster/using-three-js-for-2d-data-visualization. It shows a three.js pan and zoom example using d3-zoom working on 100,000 points. The code isn't very organized here so I recommend you check out the notebook to read about what is going on.
 
-let point_num = 960;
+let point_num = 970;
+let point_num1 = 970;
 let width = 2000;
 let viz_width = width;
 let height = 600;
@@ -26,14 +27,6 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
 })
 
-let color_array = [
-  "#ffffff",
-  "#1f78b4",
-  "#ff7f00",
-  "#8AAF1D"
-]
-
-globalfilternameforfriend="Genre";
 
 // Add canvas
 let renderer = new THREE.WebGLRenderer();
@@ -60,50 +53,186 @@ setUpZoom();
 circle_sprite= new THREE.TextureLoader().load(
   "https://fastforwardlabs.github.io/visualization_assets/circle-sprite.png"
 )
+function getScaleFromZ (camera_z_position) {
+  let half_fov = fov/2;
+  let half_fov_radians = toRadians(half_fov);
+  let half_fov_height = Math.tan(half_fov_radians) * camera_z_position;
+  let fov_height = half_fov_height * 2;
+  let scale = height / fov_height; // Divide visualization height by height derived from field of view
+  return scale;
+}
+function toRadians (angle) {
+  return angle * (Math.PI / 180);
+}
+function zoomHandler(d3_transform) {
+  let scale = d3_transform.k;
+  let x = -(d3_transform.x - viz_width/2) / scale;
+  let y = (d3_transform.y - height/2) / scale;
+  let z = getZFromScale(scale);
+  camera.position.set(x, y, z);
+}
+function getZFromScale(scale) {
+  let half_fov = fov/2;
+  let half_fov_radians = toRadians(half_fov);
+  let scale_height = height / scale;
+  let camera_z_position = scale_height / (2 * Math.tan(half_fov_radians));
+  return camera_z_position;
+}
+var mydata = JSON.parse(data);
+var GlobalFriendName =800;
+var globalfilternameforfriend="genre";
+var tsne=mydata.tsnemodelA10;
+var GlobalFilterType =mydata.tsnemodelA10;
+var isitFriend=0;
+
+createmap(GlobalFriendName);
 
 //Create the Map
-var mydata = JSON.parse(data);
+function createmap(GlobalFriendName,isitFriend){
+
+
+let color_array = [
+  "#1f78b4",
+  "#ff7f00",
+  "#8AAF1D",
+  "#AF1DA4",
+  "#8EF5F2",
+  "#F5EE10",
+  "#F51029",
+  "#6A149B",
+  "#4FF726",
+  "#641761",
+  "#efefef"
+]
+
+let color_array2 = [
+  "#7dbde8",
+  "#eaa560",
+  "#d9f783",
+  "#f293eb",
+  "#d0f2f1",
+  "#f4f2ab",
+  "#f298a2",
+  "#d39df2",
+  "#b9f4ab",
+  "#f29fef",
+  "#efefef"
+]
+
+//attach songs
+let data_points = [];
 var songdata = JSON.parse(songs);
-var GlobalFilterType =mydata.tsnemodelA10;
-var GlobalFriendName =700;
-var tsne=mydata.tsnemodelA10;
+var songuri = JSON.parse(uri);
+
+var dict_filter = {};
+dict_filter[0] = "Genre: Blues";
+dict_filter[1] = "Genre: classical";
+dict_filter[2] = "Genre: country";
+dict_filter[3] = "Genre: disco";
+dict_filter[4] = "Genre: hiphop";
+dict_filter[5] = "Genre: jazz";
+dict_filter[6] = "Genre: metal";
+dict_filter[7] = "Genre: pop";
+dict_filter[8] = "Genre: regge";
+dict_filter[9] = "Genre: rock";
+//dict_filter[10] = "nothing";
+
+blues= songuri.blues;
+classical= songuri.classical;
+country= songuri.country;
+disco= songuri.Disco;
+hiphop= songuri.HipHop;
+pop= songuri.Pop;
+reggae= songuri.Reggae;
+rock= songuri.Rock;
+metal= songuri.Metal;
 
 function randomPosition(i) {
   var tt= tsne[i];
   var pt_x = tt["coordinates"][0] * 3000;
-	//console.log("pt_x"+pt_x);
+  //console.log("pt_x"+pt_x);
   var pt_y = tt["coordinates"][1] * 3000;
   return [pt_x, pt_y];
 }
 
-let data_points = [];
-var dict_filter = {};
-dict_filter[0] = "nothing";
-dict_filter[1] = "Genre: RnB";
-dict_filter[2] = "Genre: Blues";
-dict_filter[3] = "Genre: Pop";
-console.log(dict_filter[1]);
-for (let i = 0; i < 700; i++) {
+for (let i = 0; i < point_num; i++) {
   let position = randomPosition(i);
   let name = 'Song ' + i;
-  let newname = Math.floor(Math.random() * 1);
-  //console.log("group"+group);
+  var temphold = tsne[i];
+  let newname = temphold["coordinates"][2];
+  //= Math.floor(Math.random() * 4);
   let group=dict_filter[newname];
-  let point = { position, name,newname, group};
-  console.log(point);
+  let on_off=0;
+  if(newname==0)
+  {
+    songname=blues.pop();
+    songname="https://open.spotify.com/embed?uri="+songname;
+  }
+  else if(newname==1)
+  {
+    songname=classical.pop();
+    songname="https://open.spotify.com/embed?uri="+songname;
+  }
+  else if(newname==2)
+  {
+    songname=country.pop();
+    songname="https://open.spotify.com/embed?uri="+songname;
+  }
+  else if(newname==3)
+  {
+    songname=disco.pop();
+    songname="https://open.spotify.com/embed?uri="+songname;
+  }
+  else if(newname==4)
+  {
+    songname=hiphop.pop();
+    songname="https://open.spotify.com/embed?uri="+songname;
+  }
+    else if(newname==5)
+  {
+    songname=blues.pop();
+    songname="https://open.spotify.com/embed?uri="+songname;
+  }
+    else if(newname==6)
+  {
+    songname=metal.pop();
+    songname="https://open.spotify.com/embed?uri="+songname;
+  }
+    else if(newname==7)
+  {
+    songname=pop.pop();
+    songname="https://open.spotify.com/embed?uri="+songname;
+  }
+    else if(newname==8)
+  {
+    songname=reggae.pop();
+    songname="https://open.spotify.com/embed?uri="+songname;
+  }
+    else if(newname==9)
+  {
+    songname=rock.pop();
+    songname="https://open.spotify.com/embed?uri="+songname;
+  }
+  else
+  {
+    //do nothing
+  }
+
+  let point = { position, name, newname,group,songname,on_off};
+  //console.log(point);
   data_points.push(point);
 }
 
-for (let i = 700; i < point_num; i++) {
-  let position = randomPosition(i);
-  let name = 'Song ' + i;
-  let newname = Math.floor(Math.random() * 4);
-  let group=dict_filter[newname];
-  let point = { position, name, newname,group};
-  console.log(point);
-  data_points.push(point);
+for (let i = 0; i < 800; i++) {
+  data_points[i].on_off = 1;
 }
 
+if(isitFriend==1)
+{
+  for (let i = 0; i < GlobalFriendName; i++) {
+  data_points[i].on_off = -1;
+}
+}
 
 let generated_points = data_points;
 
@@ -114,7 +243,23 @@ for (let datum of generated_points) {
   // Set vector coordinates from data
   let vertex = new THREE.Vector3(datum.position[0], datum.position[1], 0);
   pointsGeometry.vertices.push(vertex);
-  let color = new THREE.Color(color_array[datum.newname]);
+  let color;
+
+  if(datum.on_off==1)
+  {
+    color=new THREE.Color(color_array[10]);
+  }
+  else if(datum.on_off==0)
+  {
+    color=new THREE.Color(color_array2[datum.newname]);
+    //"#F9082C"
+  }
+  else
+  {
+    color = new THREE.Color(color_array[datum.newname]);
+  }
+  
+  
   colors.push(color);
 }
 pointsGeometry.colors = colors;
@@ -140,34 +285,6 @@ function animate() {
 }
 animate();
 
-function zoomHandler(d3_transform) {
-  let scale = d3_transform.k;
-  let x = -(d3_transform.x - viz_width/2) / scale;
-  let y = (d3_transform.y - height/2) / scale;
-  let z = getZFromScale(scale);
-  camera.position.set(x, y, z);
-}
-
-function getScaleFromZ (camera_z_position) {
-  let half_fov = fov/2;
-  let half_fov_radians = toRadians(half_fov);
-  let half_fov_height = Math.tan(half_fov_radians) * camera_z_position;
-  let fov_height = half_fov_height * 2;
-  let scale = height / fov_height; // Divide visualization height by height derived from field of view
-  return scale;
-}
-
-function getZFromScale(scale) {
-  let half_fov = fov/2;
-  let half_fov_radians = toRadians(half_fov);
-  let scale_height = height / scale;
-  let camera_z_position = scale_height / (2 * Math.tan(half_fov_radians));
-  return camera_z_position;
-}
-
-function toRadians (angle) {
-  return angle * (Math.PI / 180);
-}
 
 // Hover and tooltip interaction
 
@@ -197,7 +314,7 @@ function checkIntersects(mouse_position) {
     let intersect = sorted_intersects[0];
     let index = intersect.index;
     let datum = generated_points[index];
-    if(datum.newname!=0)
+    if(datum.on_off!=1)
       {
         
             highlightPoint(datum);
@@ -231,15 +348,15 @@ function checkIntersects_songplay(mouse_position) {
     let intersect = sorted_intersects[0];
     let index = intersect.index;
     let datum = generated_points[index];
-    if(datum.newname!=0)
+    if(datum.on_off!=1)
       {
         //alert("group",datum.group);
 		  //alert("play a song here");  
-      minsong = Math.ceil(0);
-      maxsong = Math.floor(songdata["song"].length -1 );
-      var songindex=Math.floor(Math.random() * (maxsong - minsong + 1)) + minsong;
-      console.log("index"+songindex);
-      document.getElementById("spotifyplayer").src = songdata.song[songindex];
+      //minsong = Math.ceil(0);
+      //maxsong = Math.floor(songdata["song"].length -1 );
+      //var songindex=Math.floor(Math.random() * (maxsong - minsong + 1)) + minsong;
+      console.log("song"+datum.songname);
+      document.getElementById("spotifyplayer").src = datum.songname;
 		//document.getElementById("player").src="https://www.youtube.com/embed/CnAmeh0-E-U";
 		//document.getElementById('some_frame_id').contentWindow.location.reload();
         
@@ -319,7 +436,7 @@ function showTooltip(mouse_position, datum) {
   tooltip_state.top = mouse_position[1] + y_offset;
   tooltip_state.name = datum.name;
   tooltip_state.group = datum.group;
-  console.log(tooltip_state);
+  //console.log(tooltip_state);
   updateTooltip();
 }
 
@@ -327,6 +444,8 @@ function hideTooltip() {
   tooltip_state.display = "none";
   updateTooltip();
 }
+}
+/*
 
 function makeNewCloud(map_model, pgroup,color_array,n, dict_filter_local){
 
@@ -356,7 +475,7 @@ function makeNewCloud(map_model, pgroup,color_array,n, dict_filter_local){
       let newname = Math.floor(Math.random() * n);
       let group=dict_filter_local[newname];
       let point = { position, name, newname,group };
-      console.log(point);
+      //console.log(point);
       data_points.push(point);
     }
 
@@ -394,35 +513,6 @@ function makeNewCloud(map_model, pgroup,color_array,n, dict_filter_local){
       renderer.render(scene, camera);
     }
     animate();
-
-    function zoomHandler(d3_transform) {
-  let scale = d3_transform.k;
-  let x = -(d3_transform.x - viz_width/2) / scale;
-  let y = (d3_transform.y - height/2) / scale;
-  let z = getZFromScale(scale);
-  camera.position.set(x, y, z);
-}
-
-function getScaleFromZ (camera_z_position) {
-  let half_fov = fov/2;
-  let half_fov_radians = toRadians(half_fov);
-  let half_fov_height = Math.tan(half_fov_radians) * camera_z_position;
-  let fov_height = half_fov_height * 2;
-  let scale = height / fov_height; // Divide visualization height by height derived from field of view
-  return scale;
-}
-
-function getZFromScale(scale) {
-  let half_fov = fov/2;
-  let half_fov_radians = toRadians(half_fov);
-  let scale_height = height / scale;
-  let camera_z_position = scale_height / (2 * Math.tan(half_fov_radians));
-  return camera_z_position;
-}
-
-function toRadians (angle) {
-  return angle * (Math.PI / 180);
-}
 
 // Hover and tooltip interaction
 
@@ -574,7 +664,7 @@ function showTooltip(mouse_position, datum) {
   tooltip_state.top = mouse_position[1] + y_offset;
   tooltip_state.name = datum.name;
   tooltip_state.group = datum.group;
-  console.log(tooltip_state);
+  //console.log(tooltip_state);
   updateTooltip();
 }
 
@@ -584,12 +674,15 @@ function hideTooltip() {
 }
 
 }
+*/
 
 // Change shape based on selected friend
 function ChangePointCloud(elt){
+  /*
 var n=4;
 var dict_filter_local={};
-document.getElementById("spotifyplayer") 
+//document.getElementById("spotifyplayer") 
+
 
 if(elt.id=="mood")
 {
@@ -603,6 +696,10 @@ else if(elt.id=="Language")
 {
 globalfilternameforfriend="Language";
 }
+else
+{
+  //do nothing
+}
 
   if(globalfilternameforfriend=="mood")
   {
@@ -614,7 +711,7 @@ globalfilternameforfriend="Language";
     dict_filter_local[4] = "Mood: Workout";
 
      color_array = [
-        "#ffffff",
+        "#efefef",
         "#1f78b4",
         "#ff7f00",
         "#ff33fc",
@@ -622,6 +719,7 @@ globalfilternameforfriend="Language";
         n=5;
     GlobalFilterType=mydata.tsnemodelA00;
     document.getElementById("filterbutton").value="Filter: Mood";
+     makeNewCloud(GlobalFilterType, GlobalFriendName,color_array,n,dict_filter_local);
     
   }
   else if(globalfilternameforfriend=="Charts")
@@ -631,13 +729,14 @@ globalfilternameforfriend="Language";
     dict_filter_local[2] = "Charts: Top 20 weekely";
     dict_filter_local[3] = "Charts: All time favourites";
          color_array = [
-        "#ffffff",,
+        "#efefef",,
         "#ff3346",
         "#ffc300",
         "#4CFF33"]
         n=4;
     GlobalFilterType=mydata.tsnemodelA04;
     document.getElementById("filterbutton").value="Filter: Charts";
+     makeNewCloud(GlobalFilterType, GlobalFriendName,color_array,n,dict_filter_local);
 
   }
   else if(globalfilternameforfriend=="Language")
@@ -647,61 +746,52 @@ globalfilternameforfriend="Language";
     dict_filter_local[2] = "Language: Hindi";
     dict_filter_local[3] = "Language: Spanish";
          color_array = [
-        "#ffffff",
+        "#efefef",
         "#ff7f00",
         "#4CFF33",
         "#ffc300"]
         n=4;
     GlobalFilterType=mydata.umapmodelA04;
     document.getElementById("filterbutton").value="Filter: Language";
+     makeNewCloud(GlobalFilterType, GlobalFriendName,color_array,n,dict_filter_local);
 
   }
-  
+  */
 
-    else if(globalfilternameforfriend=="genre")
-  {
-    
-      dict_filter_local[0] = "nothing";
-      dict_filter_local[1] = "Genre: RnB";
-      dict_filter_local[2] = "Genre: Blues";
-      dict_filter_local[3] = "Genre: Pop";
-        color_array = [
-            "#ffffff",
-            "#1f78b4",
-            "#ff7f00",
-            "#8AAF1D"
-          ]
-        n=4;
-    GlobalFilterType=mydata.tsnemodelA10;
-    document.getElementById("filterbutton").value="Filter: Genre";
-
-  }
+ 
   
   if(elt.id == "Henry")
     {
-      GlobalFriendName = 800;
+      GlobalFriendName = 100;
       document.getElementById("friendbutton").value="Friend: Henry";
+      createmap(GlobalFriendName,1);
     }
   
   else if(elt.id == "David")
     {
-      GlobalFriendName = 500;
+      GlobalFriendName = 400;
       document.getElementById("friendbutton").value="Friend: David";
+      createmap(GlobalFriendName,1);
     }
   
   else if(elt.id == "Gab")
     {
-      GlobalFriendName = 100;
+      GlobalFriendName = 600;
       document.getElementById("friendbutton").value="Friend: Gabriella";
+      createmap(GlobalFriendName,1);
     }
 
     else if(elt.id == "none")
     {
-      GlobalFriendName = 100;
-      document.getElementById("friendbutton").value="Friend: No one";
+      GlobalFriendName = 800;
+      document.getElementById("friendbutton").value="Friend: Me!";
+      createmap(GlobalFriendName,0);
     }
 
-  makeNewCloud(GlobalFilterType, GlobalFriendName,color_array,n,dict_filter_local);
+
+
+ 
+
 
 
 }
