@@ -18,12 +18,22 @@
 			<!-- header -->
 			<div id="header">
 					<div class="logo"><a href="#"><img src="images/soundTown.png" alt="" height="200" /></a></div>
+						<div class ="dropdown">
+							<button type="button" id="homebutton" class="dropbtn">Go back to home</button>
+						</div>
+						<script type="text/javascript">
+						    document.getElementById("homebutton").onclick = function () {
+						         location.href = "index.html";
+						        //document.getElementById("spotifyplayer").src = "https://open.spotify.com/embed?uri=spotify:track:1ni8ZTAY1GHXEFOGHl7fdg";
+						    };
+						</script>
 						<div class="dropdown">
 						<input type="button" id = "filterbutton" class="dropbtn" value="Filter: Genre"></input>
 						<div class="dropdown-content">
-								<a href="javascript:;" id="artist" onclick="ChangePointCloud(this)" >Artist</a>
-								<a href="javascript:;" id="album" onclick="ChangePointCloud(this)" >Album</a>
-								<a href="javascript:;" id="Language" onclick="ChangePointCloud(this)">Language</a>
+								<a href="javascript:;" id="mood" onclick="ChangePointCloud(this)" >Mood</a>
+								<a href="javascript:;" id="Language" onclick="ChangePointCloud(this)" >Language</a>
+								<a href="javascript:;" id="Charts" onclick="ChangePointCloud(this)">Charts</a>
+								<a href="javascript:;" id="genre" onclick="ChangePointCloud(this)">Genre</a>
 						</div>
 					</div>
 					<div class="dropdown">
@@ -32,6 +42,7 @@
 									<a href="javascript:;" id="Henry" onclick="ChangePointCloud(this)">Henry</a>
 									<a href="javascript:;" id="David" onclick="ChangePointCloud(this)" >David</a>
 									<a href="javascript:;" id="Gab" onclick="ChangePointCloud(this)" >Gabriella</a>
+									<a href="javascript:;" id="none" onclick="ChangePointCloud(this)" >None</a>
 							</div>
 						</div>
 				</div>
@@ -41,11 +52,14 @@
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.js'></script>		
 <script type="text/javascript" src="mapjs/data.json"></script>
+<script type="text/javascript" src="mapjs/spotifysongs.json"></script>
+
 	  <div id="main" > 
 		<script  src="mapjs/index.js"></script>
 	</div>
 	<div id="player1">
-				<iframe width="2000" height="50" src="https://www.youtube.com/embed/pFzd9hlk-_o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<!-- <iframe width="2000" height="50" src="https://www.youtube.com/embed/pFzd9hlk-_o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+				<iframe id = "spotifyplayer" src="https://open.spotify.com/embed?uri=spotify:track:1JkrD47SDpAbyvqKtolcea" width="100%" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media" autoplay></iframe>
 	</div>
 	  </div>
 	  
