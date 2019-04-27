@@ -11,48 +11,128 @@
 <script type="text/javascript" src="js/ie_png.js"></script>
 <script type="text/javascript">ie_png.fix('.png');</script>
 <![endif]-->
+<style>
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+#text{
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  font-size: 30px;
+  color: white;
+  text-decoration: underline;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+
+}
+
+#pointdef{
+  position: absolute;
+  top: 40%;
+  left: 70%;
+  font-size: 20px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+#shapedef{
+  position: absolute;
+  top: 50%;
+  right: 40%;
+  font-size: 15px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+#playerdef{
+  position: absolute;
+  top: 85%;
+  right: 50%;
+  font-size: 20px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+
+</style>
 </head>
 <body id="page1">
+	<div id="overlay" onclick="off()">
+  		<div id="text">Welcome!</div>
+  		<div id="pointdef">Click on any of the colored points to play a song!</div>
+  		<div id="playerdef">Clicking on song points changes songs in the player</div>
+  		<div id="shapedef">Shape of map reflects songs a friend has heard</div>
+</div>
+	</div>
 
     <div class="container">
 			<!-- header -->
 			<div id="header">
-					<div class="logo"><a href="#"><img src="images/soundTown.png" alt="" height="200" /></a></div>
+					<div class="logo"><a href="#"><img src="images/soundTown.png" alt="" height="150" /></a></div>
 						<div class ="dropdown">
-							<button type="button" id="homebutton" class="dropbtn">Go back to home</button>
+							<button type="button" id="homebutton" class="dropbtn">Home</button>
 						</div>
-						<script type="text/javascript">
-						    document.getElementById("homebutton").onclick = function () {
-						         location.href = "index.html";
-						        //document.getElementById("spotifyplayer").src = "https://open.spotify.com/embed?uri=spotify:track:1ni8ZTAY1GHXEFOGHl7fdg";
-						    };
-						</script>
+						
 						<div class="dropdown">
 						<input type="button" id = "filterbutton" class="dropbtn" value="Filter: Genre"></input>
 						<div class="dropdown-content">
-								<a href="javascript:;" id="mood" onclick="ChangePointCloud(this)" >Mood</a>
-								<a href="javascript:;" id="Language" onclick="ChangePointCloud(this)" >Language</a>
-								<a href="javascript:;" id="Charts" onclick="ChangePointCloud(this)">Charts</a>
-								<a href="javascript:;" id="genre" onclick="ChangePointCloud(this)">Genre</a>
+								<a style="pointer-events: none; cursor: default;" href="javascript:;" id="mood" onclick="ChangePointCloud(this)" >Mood</a>
+								<a style="pointer-events: none; cursor: default;" href="javascript:;" id="Language" onclick="ChangePointCloud(this)" >Language</a>
+								<a style="pointer-events: none; cursor: default;" href="javascript:;" id="Charts" onclick="ChangePointCloud(this)">Charts</a>
+								
 						</div>
 					</div>
 					<div class="dropdown">
-							<input type="button" id = "friendbutton" value="Friend: No one" class="dropbtn"></input>
+							<input type="button" id = "friendbutton" value="Friend: Me!" class="dropbtn"></input>
 							<div class="dropdown-content">
 									<a href="javascript:;" id="Henry" onclick="ChangePointCloud(this)">Henry</a>
 									<a href="javascript:;" id="David" onclick="ChangePointCloud(this)" >David</a>
 									<a href="javascript:;" id="Gab" onclick="ChangePointCloud(this)" >Gabriella</a>
-									<a href="javascript:;" id="none" onclick="ChangePointCloud(this)" >None</a>
+									<a href="javascript:;" id="none" onclick="ChangePointCloud(this)" >Me!</a>
 							</div>
-						</div>
+					</div>
+					<div class ="dropdown">
+							<button type="button" id="overlaybutton" onclick="on()" class="dropbtn">Help!</button>
+					</div>
+					
 				</div>
 			</div>
       <!-- content -->
+      <script type="text/javascript">
+						    document.getElementById("homebutton").onclick = function () {
+						         location.href = "index.html";
+						        //document.getElementById("spotifyplayer").src = "https://open.spotify.com/embed?uri=spotify:track:1ni8ZTAY1GHXEFOGHl7fdg";
+						    };
+	  </script>
+ <script>
+	function on() {
+	  document.getElementById("overlay").style.display = "block";
+	}
+
+	function off() {
+	  document.getElementById("overlay").style.display = "none";
+	}
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.js'></script>
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.js'></script>		
 <script type="text/javascript" src="mapjs/data.json"></script>
 <script type="text/javascript" src="mapjs/spotifysongs.json"></script>
+<script type="text/javascript" src="mapjs/uris.json"></script>
 
 	  <div id="main" > 
 		<script  src="mapjs/index.js"></script>
